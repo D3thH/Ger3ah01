@@ -17,5 +17,6 @@ namespace Infrastructure.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Ger3ahName> Ger3ahNames { get; set; }
         public DbSet<Ger3ahLog> Ger3ahLogs { get; set; }
+        public DbSet<PickerChrecer> PickerChrecer { get; set; }
     }
 }

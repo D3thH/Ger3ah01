@@ -8,8 +8,11 @@ namespace Core.Entities
     public class Ger3ahLog
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public string  PickerName { get; set; }
         public string PickedName { get; set; }
-        public DateTime CraetedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
+
+         public virtual User User { get; set; }
     }
 }

@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class User
+    public class PickerChrecer
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string NameAR { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public int UserId { get; set; }
+        public bool IsAlreadyPickedName { get; set; }
+
+        public virtual User User { get; set; }
     }
 }

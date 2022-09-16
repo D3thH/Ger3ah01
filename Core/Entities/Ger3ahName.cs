@@ -8,9 +8,10 @@ namespace Core.Entities
     public class Ger3ahName
     {
         public int Id { get; set; }
-        public virtual User userId { get; set; }
+        public int UserId { get; set; }
         public string name { get; set; }
         public bool IsTaken { get; set; }
-        public DateTime DateOfPicking { get; set; }
+
+         public virtual User User { get; set; }
     }
 }

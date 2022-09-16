@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
+using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,16 +14,16 @@ namespace API.Controllers
     [Route("api/[Controller]/[action]")]
     public class Ger3ahController : ControllerBase
     {
-        private readonly Ger3ahContext _context;
-        public Ger3ahController(Ger3ahContext context)
+        private readonly IGer3ahRepository _repo;
+        public Ger3ahController(IGer3ahRepository repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<User>>> GetAllGer3ahNames(){
+        public async Task<ActionResult<List<Ger3ahName>>> GetAllGer3ahNames(){
             
-            var Ger3ahNames = await _context.Ger3ahNames.ToListAsync();
+            var Ger3ahNames = await _repo.GetAllGer3ahNames();
             if (Ger3ahNames.Count() < 1)
             {
                 return BadRequest("thier are no more names in the Ger3ah");
@@ -34,15 +35,20 @@ namespace API.Controllers
         public ActionResult<List<User>> GetGer3ahHestory(string name){
             if (name != null) //need more checke if the name is waitspase
             {
-                var logForTheEnterdName = _context.Ger3ahLogs.Where(n => n.PickerName == name).ToList();
+                var logForTheEnterdName = _repo.GetGer3ahHestory(name);
                 return Ok(logForTheEnterdName);
             }
-            return BadRequest("thier in no log for u name");
+            return BadRequest("you have to enter a valed Name");
         }
 
         [HttpGet]
-        public string NamePicker(){
-            return "this will pick a name and return 200";
+        public ActionResult NamePicker(string name){
+            if (name != null) //need more checke if the name is waitspase
+            {
+                var logForTheEnterdName = _repo.NamePicker(name);
+                return Ok(logForTheEnterdName);
+            }
+            return BadRequest("you have to enter a valed Name");
         } 
         
     }
