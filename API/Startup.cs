@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Infrastructure.Helpers;
 
 namespace API
 {
@@ -30,6 +31,7 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IGer3ahRepository, Ger3ahRepository>();
+            services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             services.AddDbContext<Ger3ahContext>(x =>
                  x.UseSqlite(_config.GetConnectionString("DefaultConnection")));
@@ -52,6 +54,7 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 
