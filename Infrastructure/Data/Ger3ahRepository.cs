@@ -31,7 +31,7 @@ namespace Infrastructure.Data
         public async Task<List<Ger3ahLog>> GetGer3ahHestory(string name)
         {
             var searcherId = _context.Users.Where(x => x.NameAR == name).FirstOrDefault().Id;
-            var Ger3ahNames = await _context.Ger3ahLogs.Where(x => x.UserId == searcherId).ToListAsync();
+            var Ger3ahNames = await _context.Ger3ahLogs.Where(x => x.UserId == searcherId).OrderByDescending(x => x.CreatedDate).ToListAsync();
             //Ger3ahNames.Where(n => n.PickedName == name).ToList();
 
             return Ger3ahNames;
