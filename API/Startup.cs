@@ -33,6 +33,8 @@ namespace API
             services.AddScoped<IGer3ahRepository, Ger3ahRepository>();
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
+            // services.AddDbContext<Ger3ahContext>(x =>
+            //      x.UseSqlServer(_config.GetConnectionString("DefaultConnection")));
             services.AddDbContext<Ger3ahContext>(x =>
                  x.UseSqlite(_config.GetConnectionString("DefaultConnection")));
             services.AddSwaggerGen(c =>
@@ -42,7 +44,7 @@ namespace API
             services.AddCors(opt => {
                 opt.AddPolicy("CorsPolicy", police => 
                 {
-                    police.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                    police.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:8080", "http://localhost:4200");
                 });
             });
         }
@@ -57,7 +59,7 @@ namespace API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPIv5 v1"));
             }
 
-            app.UseStatusCodePagesWithReExecute("errors{0}");
+            app.UseStatusCodePagesWithReExecute("/errors{0}");
 
             app.UseHttpsRedirection();
 

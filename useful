@@ -1,0 +1,18 @@
+--make new migrations--
+"dotnet ef migrations add thetitle -p Infrastructure -s API -o Data/migrations"
+explain the letters
+thetitle = the name for the migrations that will be use in the migrations table
+-p spesfay the project
+-s statup project
+-o outpot folder the file that will contains all migrations
+
+-- drop migrations from database--
+"dotnet ef database drop -p Infrastructure -s API"
+
+-- deket migrations from Data/migrations folder--
+"dotnet ef migrations remove -p Infrastructure -s API"
+
+--update the database--
+"dotnet ef database update"
+
+

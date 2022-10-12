@@ -1,0 +1,12 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="container" style="margin-top: 140px;">
+    <h1>حياك الله في {{title}}</h1>
+    <ul>
+        <li class="list-unstyled" *ngFor="let name of names">
+            {{name.user.nameAR}}
+        </li>
+        <p>الاسماء الموجودة في القرعة</p>
+        {{names.length}}
+    </ul>
+</div>

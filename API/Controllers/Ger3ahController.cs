@@ -25,10 +25,6 @@ namespace API.Controllers
         public async Task<ActionResult<List<Ger3ahName>>> GetAllGer3ahNames(){
             
             var Ger3ahNames = await _repo.GetAllGer3ahNames();
-            if (Ger3ahNames.Count() < 1)
-            {
-                return BadRequest("thier are no more names in the Ger3ah");
-            }
             return Ok(Ger3ahNames);
         }
 
@@ -43,14 +39,31 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public ActionResult NamePicker(string name){
+        public ActionResult NamePicker(string name,  string email){
             if (!string.IsNullOrEmpty(name) && !string.IsNullOrWhiteSpace(name)) //need more checke if the name is waitspase
             {
-                var logForTheEnterdName = _repo.NamePicker(name);
+                var logForTheEnterdName = _repo.NamePicker(name, email);
                 return Ok(logForTheEnterdName);
             }
             return NotFound(new ApiResponse(400));
+        }
+
+
+        [HttpGet]
+        public ActionResult ReBuildTheGer3ah(){
+
+            _repo.ReBuildTheGer3ah();
+            return Ok();
         } 
+        
+        [HttpGet]
+        public ActionResult RemoveNameFromGer3ah(string name){
+
+            var result = _repo.RemoveNameFromGer3ah(name);
+            return Ok(result);
+        } 
+
+        
         
     }
 }

@@ -9,8 +9,11 @@ namespace Core.Interfaces
 {
     public interface IGer3ahRepository
     {
-         Task<List<Ger3ahName>> GetAllGer3ahNames();
-         Task<List<Ger3ahLog>> GetGer3ahHestory(string name);
-         Ger3ahOutputDto NamePicker(string name);
+        Task<GetNumberOfPeboleInGer3ahDto> GetAllGer3ahNames();
+        Task<List<GetTheHestoryOfTheGer3ahDto>> GetGer3ahHestory(string name);
+        Ger3ahOutputDto NamePicker(string name, string email);
+        void ReBuildTheGer3ah();
+        RemvedNameStatus RemoveNameFromGer3ah(string name);
+        void sendEnailToThePicer(string to, Ger3ahName PickedName,User Picker);
     }
 }
