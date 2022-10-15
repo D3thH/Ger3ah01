@@ -92,7 +92,7 @@ namespace Infrastructure.Data
 
                 if (!string.IsNullOrEmpty(email))
                 {
-                    //if the email has value send a email to it with using Thread
+                    //if the email has value send a email to the picker with using Thread
                     Thread sendEmailThread = new Thread(() =>
                             {
                                 sendEnailToThePicer(email, PickedName, Picker);
@@ -149,8 +149,9 @@ namespace Infrastructure.Data
 
         public RemvedNameStatus RemoveNameFromGer3ah(string name)
         {
-
-            var theRemovedName = _context.Users.Where(x => x.NameAR == name).FirstOrDefault();
+            try
+            {
+                var theRemovedName = _context.Users.Where(x => x.NameAR == name).FirstOrDefault();
             if (theRemovedName == null)
                 return new RemvedNameStatus { Status = "the name that was entered  does not exist in the system" };
 
@@ -173,31 +174,43 @@ namespace Infrastructure.Data
             _context.SaveChanges();
 
             return new RemvedNameStatus { Status = "Done" };
+                
+            }
+            catch (System.Exception)
+            {
+                
+                throw;
+            }
         }
 
         public void sendEnailToThePicer(string to, Ger3ahName PickedName, User Picker)
         {
-            string from = "Ger3ah@gmail.com"; //From address    
-            // string to = "to@gmail.com"; //To address    
-            MailMessage message = new MailMessage(from, to);
-
-            string mailbody = $"السلام عليكم حياك الله <br>  الاسم اللي طلع لك في القرعة ياحبيبنا هو <br> {PickedName.User.NameAR} <br> تمت اضافة خاصية الرسائل لتجعل نسيان الاسم اكثر صعوبة وتحجير في نفس الوقت 😂 <br> ملاحظة: لن يتم ارسال رسالة لك الا في حال انك اجريت القرعة قفط وطلبت ارسال رسالة <br>  فإذا اتتك رسالة خارج هذا الاطار فتجاهلها وعلمني<br> وشكرا لك  ";
-            message.Subject = $"{Picker.NameAR} الاسم اللي طلع لك من القرعة هنا !";
-            message.Body = mailbody;
-            message.BodyEncoding = Encoding.UTF8;
-            message.IsBodyHtml = true;
-            SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
-            System.Net.NetworkCredential basicCredential1 = new
-            System.Net.NetworkCredential("ger3ah@gmail.com", "bmmwhnvogrxjcesh");
-            client.EnableSsl = true;
-            client.UseDefaultCredentials = false;
-            client.Credentials = basicCredential1;
             try
             {
-                client.Send(message);
-            }
+                string from = "ger3ah.3ed@gmail.com"; //From address    
+                //string to = "to@gmail.com"; //To address    
+                MailMessage message = new MailMessage(from, to);
 
-            catch (Exception)
+                string mailbody = "<!DOCTYPE html><html lang=\"en\"><head> <meta charset=\"UTF-8\"> <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> <title>Document</title></head><style> .contener { text-align: center; line-height: 2; } .namePicked { color: rgb(105, 8, 19); }</style><body> <div class=\"contener\"> <p> السلام عليكم حياك الله <br> الاسم اللي طلع لك في القرعة ياحبيبنا هو <br> <span class=\"namePicked\"> #PickedName# <br> </span> تمت اضافة خاصية الرسائل لتجعل نسيان الاسم اكثر صعوبة وتحجير في نفس الوقت <br> 😂 <br> ملاحظة: لن يتم ارسال رسالة لك الا في حال انك اجريت القرعة فقط وطلبت ارسال رسالة <br> فإذا اتتك رسالة خارج هذا الاطار فتجاهلها وعلمني<br> ❤️ وشكرا لك </p> </div></body></html>";
+                message.Subject = $"{Picker.NameAR} الاسم اللي طلع لك من القرعة هنا !";
+                message.Body = mailbody.Replace("#PickedName#", PickedName.User.NameAR);
+                message.BodyEncoding = Encoding.UTF8;
+                message.IsBodyHtml = true;
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
+                System.Net.NetworkCredential basicCredential1 = new
+                System.Net.NetworkCredential("ger3ah.3ed@gmail.com", "crkrkldvxxjzgwyc");
+                client.EnableSsl = true;
+                client.UseDefaultCredentials = false;
+                client.Credentials = basicCredential1;
+                try
+                {
+                    client.Send(message);
+                }
+                catch (Exception)
+                {
+                }
+            }
+            catch (System.Exception)
             {
             }
         }

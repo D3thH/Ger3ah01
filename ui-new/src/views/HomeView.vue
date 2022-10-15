@@ -14,8 +14,8 @@
     />
     <br>
     <span class="text-danger" v-if="$v.name.$invalid && $v.name.$dirty"
-        >خطأ في المدخلات</span
-      >
+      >خطأ في المدخلات</span
+    >
     <br />
     <b-form-checkbox
       id="checkbox-1"
@@ -57,33 +57,38 @@
       hide-footer
       no-close-on-esc
       no-close-on-backdrop
-      hide-header-close 
+      hide-header-close
     >
-      <p class="moo">الرجاء كتابة الايميل تبعك وتأكد منه لاهنت</p>
-      <input
-        @keypress.enter="picke()"
-        v-model="email"
-        placeholder="الرجاء كتابة الايميل هنا"
-        type="email"
-        style="
-          width: 326px;
-          border-radius: 4px;
-          text-align: center;
-          font-size: 20px;
-          margin: 38px 0;
-        "
-      />
+      <div style="text-align: center;">
+        <p class="moo">الرجاء كتابة الايميل تبعك وتأكد منه لاهنت</p>
+        <input
+          @keypress.enter="picke()"
+          v-model="email"
+          placeholder="الرجاء كتابة الايميل هنا"
+          type="email"
+          style="
+            width: 326px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 20px;
+            margin: 38px 0;
+          "
+        />
 
-      <b-button :disabled="$v.email.$invalid" 
-      :class = "{
-       unvalid: $v.email.$invalid == true 
-      }"
-       variant="outline-warning" block @click="picke()"
-        >تابع</b-button
-      >
-      <b-button class="mt-3" variant="outline-danger" block @click="hideModal"
-        >إلغاء</b-button
-      >
+        <b-button
+          :disabled="$v.email.$invalid"
+          :class="{
+            unvalid: $v.email.$invalid == true,
+          }"
+          variant="outline-warning"
+          block
+          @click="picke()"
+          >تابع</b-button
+        >
+        <b-button class="mt-3" variant="outline-danger" block @click="hideModal"
+          >إلغاء</b-button
+        >
+      </div>
     </b-modal>
   </div>
 </template>
@@ -96,7 +101,7 @@ const {
   // maxLength,
   // minLength,
   // requiredIf,
-  email
+  email,
 } = require("vuelidate/lib/validators");
 
 export default {
@@ -105,7 +110,7 @@ export default {
       name: "",
       theRemainingNames: "",
       pickedName: "",
-      email: null,
+      email: "",
       isSendEmailWanted: false,
       isLoading: false,
     };
@@ -133,7 +138,7 @@ export default {
       }
 
       if (this.isSendEmailWanted == true) {
-        if (this.email == null) {
+        if (this.email == "") {
           this.$refs["my-modal"].show();
           return;
         }
@@ -163,7 +168,7 @@ export default {
               this.pickedName = "فيه مصيبة حصلة في النظام كلم فهد لاهنت";
             }
           }
-          this.email = null;
+          this.email = "";
           this.isLoading = false;
           this.getAllNames();
         })
@@ -173,7 +178,7 @@ export default {
         });
     },
     hideModal() {
-      this.email = null;
+      this.email = "";
       this.$refs["my-modal"].hide();
     },
     cleare() {

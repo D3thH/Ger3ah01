@@ -1,21 +1,21 @@
 import axios  from "axios";
 
-const baseUrl = 'https://localhost:5001/api/Ger3ah/'
+const baseUrl = process.env.VUE_APP_API_URL
 
 export const ger3ahApi = {
     getNumberOfNameLeft: () => {
-       return axios.get(`${baseUrl}GetAllGer3ahNames`);
+       return axios.get(`${baseUrl}/api/Ger3ah/GetAllGer3ahNames`);
     },
     pickAName: (name, email) => {
-        return axios.get(`${baseUrl}NamePicker?name=${name}&email=${email}`)
+        return axios.get(`${baseUrl}/api/Ger3ah/NamePicker?name=${name}&email=${email}`)
     },
     getGer3ahHestory: (name) => {
-        return axios.get(`${baseUrl}GetGer3ahHestory?name=${name}`)
+        return axios.get(`${baseUrl}/api/Ger3ah/GetGer3ahHestory?name=${name}`)
     },
     reBuildTheGer3ah:() => {
-        return axios.get(`${baseUrl}ReBuildTheGer3ah`)
+        return axios.get(`${baseUrl}/api/Ger3ah/ReBuildTheGer3ah`)
     },
     removeNameFromGer3ah:(nameThatWillRemoved) => {
-        return axios.get(`${baseUrl}RemoveNameFromGer3ah?name=${nameThatWillRemoved}`)
+        return axios.get(`${baseUrl}/api/Ger3ah/RemoveNameFromGer3ah?name=${nameThatWillRemoved}`)
     }
 };
